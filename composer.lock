@@ -1,0 +1,154 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "d9f0c2c46e083286e658e3b58d1ca982",
+    "packages": [
+        {
+            "name": "g105b/drng",
+            "version": "v1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/g105b/drng.git",
+                "reference": "065b561e4a8073f43206e6f45704afb5fce14e8b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/g105b/drng/zipball/065b561e4a8073f43206e6f45704afb5fce14e8b",
+                "reference": "065b561e4a8073f43206e6f45704afb5fce14e8b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "g105b\\drng\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Deterministic random number generator.",
+            "support": {
+                "issues": "https://github.com/g105b/drng/issues",
+                "source": "https://github.com/g105b/drng/tree/v1"
+            },
+            "time": "2020-02-13T13:50:26+00:00"
+        },
+        {
+            "name": "phpgt/cli",
+            "version": "v1.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PhpGt/Cli.git",
+                "reference": "b0334aee36f9e8aad9ca8b9cda397ffe5781f96f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PhpGt/Cli/zipball/b0334aee36f9e8aad9ca8b9cda397ffe5781f96f",
+                "reference": "b0334aee36f9e8aad9ca8b9cda397ffe5781f96f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-readline": "*",
+                "php": ">=8.0",
+                "phpgt/daemon": "^v1.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^v1.4",
+                "phpunit/phpunit": "^v9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gt\\Cli\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Bowler",
+                    "email": "greg.bowler@g105b.com"
+                }
+            ],
+            "description": "Command line interface builder.",
+            "keywords": [
+                "cli",
+                "phpgt",
+                "terminal",
+                "webengine"
+            ],
+            "support": {
+                "issues": "https://github.com/PhpGt/Cli/issues",
+                "source": "https://github.com/PhpGt/Cli/tree/v1.3.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/PhpGt",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-26T15:38:15+00:00"
+        },
+        {
+            "name": "phpgt/daemon",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PhpGt/Daemon.git",
+                "reference": "6490df99a22818149f30e3af408002ea7f73e035"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PhpGt/Daemon/zipball/6490df99a22818149f30e3af408002ea7f73e035",
+                "reference": "6490df99a22818149f30e3af408002ea7f73e035",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "phpstan/phpstan": ">=0.12.42",
+                "phpunit/phpunit": "9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Gt\\Daemon\\": "./src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Background script execution with cross-platform compatible streaming.",
+            "support": {
+                "issues": "https://github.com/PhpGt/Daemon/issues",
+                "source": "https://github.com/PhpGt/Daemon/tree/v1.1.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/phpgt",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-02-02T17:33:16+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
+}

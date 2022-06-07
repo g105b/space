@@ -1,0 +1,11 @@
+{
+	"require": {
+		"g105b/drng": ">=v0.2.0",
+		"phpgt/cli": ">=v1.3.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Space\\": "./"
+		}
+	}
+}
