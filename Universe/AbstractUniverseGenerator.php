@@ -22,17 +22,25 @@ abstract class AbstractUniverseGenerator {
 	/** @var array<float, float> */
 	protected array $ssc;
 
+	protected array $data;
+
 	public function __construct(
-		protected string $locator
+		protected string $locator,
+		protected ?array $prevData = null,
 	) {
 		$this->rand = new Random(
 			new StringSeed($locator)
 		);
 		$this->extractLocatorParts($locator);
+		$this->data = $this->generate();
 	}
 
-	public function __toString():string {
-		var_dump($this);die();
+	abstract public function __toString():string;
+
+	abstract protected function generate():array;
+
+	public function getData():array {
+		return $this->data;
 	}
 
 	protected function extractLocatorParts(string $locator):void {

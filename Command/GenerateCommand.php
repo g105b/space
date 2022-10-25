@@ -20,27 +20,27 @@ class GenerateCommand extends Command {
 
 		if($lgc = $arguments->get("lgc", "")->get()) {
 			$locator .= " lgc=$lgc";
-			$generator = new Generator02LGC($locator);
+			$generator = new Generator02LGC($locator, $generator->getData());
 		}
 		if($ggc = $arguments->get("ggc", "")->get()) {
 			$locator .= " ggc=$ggc";
-			$generator = new Generator03GGC($locator);
+			$generator = new Generator03GGC($locator, $generator->getData());
 		}
 		if($sgc = $arguments->get("sgc", "")->get()) {
 			$locator .= " sgc=$sgc";
-			$generator = new Generator04SGC($locator);
+			$generator = new Generator04SGC($locator, $generator->getData());
 		}
 		if($ssc = $arguments->get("ssc", "")->get()) {
 			$locator .= " ssc=$ssc";
-			$generator = new Generator05SSC($locator);
+			$generator = new Generator05SSC($locator, $generator->getData());
 		}
 		if($ods = $arguments->get("ods", "")->get()) {
 			$locator .= " ods=$ods";
-			$generator = new Generator06ODS($locator);
+			$generator = new Generator06ODS($locator, $generator->getData());
 		}
 		if($gps = $arguments->get("gps", "")->get()) {
 			$locator .= " gps=$gps";
-			$generator = new Generator08GPS($locator);
+			$generator = new Generator08GPS($locator, $generator->getData());
 		}
 
 		$this->writeLine($generator);
