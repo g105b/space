@@ -1,11 +1,25 @@
 {
 	"require": {
-		"g105b/drng": ">=v0.2.0",
-		"phpgt/cli": ">=v1.3.3"
+		"ext-gd": "*",
+
+		"phpgt/webengine": "dev-master",
+		"g105b/drng": ">=0.2.0",
+		"g105b/graph": "^1.0",
+
+		"blackscorp/simplexnoise": "v0.2.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.5",
+		"phpstan/phpstan": "^1.9"
 	},
 	"autoload": {
 		"psr-4": {
-			"Space\\": "./"
+			"Space\\": "./class/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Space\\Test\\": "./test/phpunit/"
 		}
 	}
 }

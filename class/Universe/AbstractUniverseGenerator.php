@@ -6,41 +6,66 @@ use g105b\drng\StringSeed;
 use OutOfBoundsException;
 
 abstract class AbstractUniverseGenerator {
+	public const CODE = "xyz";
 	public const REGEX = "(?P<MULTIVERSE_ID>[^@]+)@";
+	public const MIN = 0;
+	public const MAX = 0;
 
 	protected Random $rand;
 
-	protected string $multiverseId;
+	public readonly string $multiverseId;
 	/** @var array<int, int> */
-	protected array $usc;
+	public readonly array $ugs;
 	/** @var array<int, int> */
-	protected array $lgc;
+	public readonly array $lgs;
 	/** @var array<int, int> */
-	protected array $ggc;
+	public readonly array $ggs;
 	/** @var array<int, int> */
-	protected array $sgc;
+	public readonly array $sgs;
 	/** @var array<float, float> */
-	protected array $ssc;
+	public readonly array $ssc;
 
-	protected array $data;
+	public readonly string $dirPath;
+	public readonly array $data;
 
 	public function __construct(
-		protected string $locator,
-		protected ?array $prevData = null,
+		public readonly string $locator,
+		protected readonly ?array $prevData = null,
 	) {
 		$this->rand = new Random(
 			new StringSeed($locator)
 		);
 		$this->extractLocatorParts($locator);
-		$this->data = $this->generate();
-	}
+		$this->dirPath = $this->getDirPath();
+		if(!is_dir($this->dirPath)) {
+			mkdir($this->dirPath, recursive: true);
+		}
 
-	abstract public function __toString():string;
+		$this->data = $this->generate();
+		$this->cache();
+	}
 
 	abstract protected function generate():array;
 
-	public function getData():array {
-		return $this->data;
+	abstract protected function cache():void;
+
+	/**
+	 * @param float $value the incoming value to be converted
+	 * @param float $lowCurrent lower bound of the value's current range
+	 * @param float $highCurrent upper bound of the value's current range
+	 * @param float $lowTarget lower bound of the value's target range
+	 * @param float $highTarget upper bound of the value's target range
+	 * @return float
+	 */
+	protected function map(
+		float $value,
+		float $lowCurrent,
+		float $highCurrent,
+		float $lowTarget,
+		float $highTarget,
+	):float {
+		return ($value / ($highCurrent - $lowCurrent))
+			* ($highTarget - $lowTarget) + $lowTarget;
 	}
 
 	protected function extractLocatorParts(string $locator):void {
@@ -51,38 +76,53 @@ abstract class AbstractUniverseGenerator {
 		}
 
 		$this->multiverseId = $matches["MULTIVERSE_ID"];
-		if(isset($matches["USC_X"]) && isset($matches["USC_Y"])) {
-			$this->usc = $this->extractCoords("USC", $matches);
+		if(isset($matches["UGS_X"]) && isset($matches["UGS_Y"])) {
+			$this->ugs = $this->extractCoords("UGS", $matches);
 		}
 
-		if(isset($matches["LGC_X"]) && isset($matches["LGC_Y"])) {
-			$this->lgc = $this->extractCoords("LGC", $matches);
-			$this->clamp("LGC", $this->lgc, -100, 100);
+		if(isset($matches["LGS_X"]) && isset($matches["LGS_Y"])) {
+			$this->lgs = $this->extractCoords("LGS", $matches);
+			$this->clamp("LGS", $this->lgs, -100, 100);
 		}
 
-		if(isset($matches["GGC_X"]) && isset($matches["GGC_Y"])) {
-			$this->ggc = $this->extractCoords("GGC", $matches);
-			$this->clamp("GGC", $this->ggc, -30, 30);
+		if(isset($matches["GGS_X"]) && isset($matches["GGS_Y"])) {
+			$this->ggs = $this->extractCoords("GGS", $matches);
+			$this->clamp("GGS", $this->ggs, -30, 30);
 		}
 
-		if(isset($matches["SGC_X"]) && isset($matches["SGC_Y"])) {
-			$this->sgc = $this->extractCoords("SGC", $matches);
-			$this->clamp("SGC", $this->sgc, -100, 100);
+		if(isset($matches["SGS_X"]) && isset($matches["SGS_Y"])) {
+			$this->sgs = $this->extractCoords("SGS", $matches);
+			$this->clamp("SGS", $this->sgs, -100, 100);
 		}
 
-		if(isset($matches["SSC_Z"]) && isset($matches["SSC_LON"])) {
+		if(isset($matches["SPS_Z"]) && isset($matches["SSC_LON"])) {
 			$this->ssc = $this->extractPosition("SSC", $matches);
 			$this->clampPosition("SSC", $this->ssc, 1031324);
 		}
 	}
 
+	private function getDirPath():string {
+		$dirPath = "data/universe/$this->multiverseId";
+
+		if(isset($this->ugs)) {
+			$dirPath .="/ugs_";
+			$dirPath .= ($this->ugs[0] >= 0) ? "+" : "";
+			$dirPath .= $this->ugs[0];
+			$dirPath .= ":";
+			$dirPath .= ($this->ugs[1] >= 0) ? "+" : "";
+			$dirPath .= $this->ugs[1];
+		}
+
+		return $dirPath;
+	}
+
 	private function extractCoords(string $type, array $matches):array {
 		$x = $matches["{$type}_X"];
-		$xScale = $x[0] === "p" ? 1 : -1;
+		$xScale = $x[0] === "+" ? 1 : -1;
 		$x = ((int)substr($x, 1)) * $xScale;
 
 		$y = $matches["{$type}_Y"];
-		$yScale = $y[0] === "p" ? 1 : -1;
+		$yScale = $y[0] === "+" ? 1 : -1;
 		$y = ((int)substr($y, 1)) * $yScale;
 
 		return[$x, $y];

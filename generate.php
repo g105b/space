@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 use Gt\Cli\Application;
 use Gt\Cli\Argument\CommandArgumentList;
@@ -7,7 +6,7 @@ use Space\Command\GenerateCommand;
 require "vendor/autoload.php";
 
 $application = new Application(
-	"Let's generate space",
+	"Let's explore",
 	new CommandArgumentList("generate", ...$argv),
 	new GenerateCommand(),
 );
