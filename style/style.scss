@@ -1,0 +1,258 @@
+$c-black: #000000;
+$c-dark-blue: #1D2B53;
+$c-purple: #7E2553;
+$c-dark-green: #008751;
+$c-brown: #AB5236;
+$c-dark-grey: #5F574F;
+$c-light-grey: #C2C3C7;
+$c-white: #FFF1E8;
+$c-red: #FF004D;
+$c-orange: #FFA300;
+$c-yellow: #FFEC27;
+$c-green: #00E436;
+$c-blue: #29ADFF;
+$c-lavendar: #83769C;
+$c-pink: #FF77A8;
+$c-light-peach: #FFCCAA;
+
+$pal-bg-1: $c-black;
+$pal-bg-2: $c-dark-blue;
+$pal-view: $c-black;
+$pal-location: $c-dark-blue;
+$pal-location--context: $c-blue;//
+$pal-log: $c-dark-blue;
+$pal-actions: $c-dark-grey;
+$pal-action--inventory: $c-lavendar;
+$pal-action--trade: $c-orange;
+$pal-action--attack: $c-red;
+$pal-action--help: $c-dark-green;
+
+@mixin contrast-var($c) {
+	$color-brightness: round((red($c)*299)+(green($c)*587)+(blue($c)*114)/1000);
+	$light-color: round((red(#ffffff)*299)+(green(#ffffff)*587)+(blue(#ffffff)*114)/1000);
+	@if abs($color-brightness) < ($light-color/2) {
+		--c-contrast: #{$c-white};
+	}
+	@else {
+		--c-contrast: #{$c-black};
+	}
+
+	--c-main: #{$c};
+
+	background-color: var(--c-main);
+	color: var(--c-contrast);
+}
+
+@font-face {
+	font-family: "DOS";
+	src: url("/asset/font/DOS.ttf");
+}
+
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-family: DOS, monospace;
+	color: white;
+
+	$line-color: #222f44;
+	background-color: #0000a8;
+	background-image:
+		linear-gradient(0deg, transparent 50%, $pal-bg-2 50%),
+		linear-gradient(90deg, $pal-bg-2 50%, $pal-bg-1 50%);
+	background-size: 4px 4px;
+	background-position: 2px 2px, 2px 12px, 12px -8px, -8px 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+svg {
+	display: none;
+}
+
+#screen {
+	position: relative;
+	transition: all 0.5s ease-in-out;
+	image-rendering: crisp-edges;
+
+	@media(min-width: 800px) {
+		cursor: none;
+
+		a {
+			cursor: none;
+		}
+	}
+
+	#mouse {
+		position: absolute;
+		z-index: 100;
+		pointer-events: none;
+	}
+}
+
+main {
+	background-color: #0000a8;
+	background-image:
+		linear-gradient(0deg, transparent 50%, #0000a8 50%),
+		linear-gradient(90deg, #0000a8 50%, #019e9d 50%);
+	background-size: 4px 4px;
+	background-position: 2px 2px, 2px 12px, 12px -8px, -8px 2px;
+
+	width: 100vw;
+	height: 100svh;
+
+	@media(min-width: 800px) {
+		width: 800px;
+		height: 600px;
+	}
+
+	>section {
+		position: relative;
+		display: flex;
+		justify-content: stretch;
+		align-items: stretch;
+		box-sizing: border-box;
+		border: 6px double;
+
+		&#game-view {
+			@include contrast-var($pal-view);
+
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			aspect-ratio: 1;
+			border-bottom: none;
+
+			@media(min-width: 800px) {
+				width: 50%;
+				border-bottom: 6px double;
+				border-right: none;
+			}
+		}
+		&#location {
+			@include contrast-var($pal-location);
+
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			position: absolute;
+			top: 100vw;
+			left: 0;
+			right: 0;
+			height: 4rem;
+			text-align: center;
+
+			@media(min-width: 800px) {
+				right: 50%;
+				top: auto;
+				bottom: 0;
+			}
+
+			>a {
+				@include contrast-var($pal-location);
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-decoration: none;
+				width: 25%;
+				font-size: 1rem;
+
+				&[href="/location/nav/"] {
+					border-right: 2px solid;
+				}
+				&[href="/location/context/"] {
+					@include contrast-var($pal-location--context);
+					width: 50%;
+				}
+				&[href="/location/navigate/"] {
+					border-left: 2px solid;
+				}
+
+				>span {
+				}
+			}
+		}
+		&#actions {
+			@include contrast-var($pal-actions);
+
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 4rem;
+			display: flex;
+
+			@media(min-width: 800px) {
+				left: 50%;
+			}
+
+			>a {
+				@include contrast-var($pal-actions);
+				box-sizing: border-box;
+				width: 25%;
+				text-decoration: none;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				border-right: 2px solid white;
+
+				&:nth-of-type(4) {
+					border-right: none;
+				}
+
+				&[href="/actions/inventory/"] {
+					@include contrast-var($pal-action--inventory);
+				}
+				&[href="/actions/trade/"] {
+					@include contrast-var($pal-action--trade);
+				}
+				&[href="/actions/attack/"] {
+					@include contrast-var($pal-action--attack);
+				}
+				&[href="/actions/help/"] {
+					@include contrast-var($pal-action--help);
+				}
+			}
+		}
+		&#log {
+			@include contrast-var($pal-log);
+			position: absolute;
+			top: calc(100vw + 4rem);
+			bottom: 4rem;
+			border-top: none;
+			border-bottom: none;
+			width: 100%;
+
+			&:target {
+				display: block;
+			}
+
+			@media(min-width: 800px) {
+				top: 0;
+				left: 50%;
+				right: 0;
+				width: auto;
+				border-top: 6px double;
+			}
+
+			>div {
+				p {
+					margin: 1rem;
+				}
+			}
+		}
+	}
+}

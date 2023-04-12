@@ -1,0 +1,12 @@
+{
+	"short-name": "Space",
+	"name": "Space",
+	"icons": [{
+		"src": "/asset/icon.svg",
+		"type": "image/svg",
+		"sizes": "192x192"
+	}],
+	"start_url": "/?utm_source=homescreen",
+	"background_color": "#000000",
+	"theme_color": "#000000"
+}
