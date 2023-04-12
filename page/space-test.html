@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Space Test</title>
+	<style>
+		html, body {
+			height: 100%;
+		}
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			background: dimgrey;
+		}
+		main {
+			background: black;
+			aspect-ratio: 1;
+			height: calc(100vmin - 2rem);
+		}
+		ul {
+			position: relative;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			display: flex;
+			flex-wrap: wrap;
+		}
+		ul>li {
+			display: flex;
+			justify-content: stretch;
+			align-items: stretch;
+			width: 10%;
+			aspect-ratio: 1;
+		}
+		ul>li>form {
+			flex-grow: 1;
+		}
+		ul>li>form>label {
+			display: flex;
+		}
+		input[type='image'] {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+<main>
+	<ul>
+		<li data-template data-bind:data-x="x" data-bind:data-y="y">
+			<form>
+				<label>
+					<input type="image" src="/sky/?x={{x}}&y={{y}}" alt="Noise at {{x}}:{{y}}" />
+				</label>
+			</form>
+		</li>
+	</ul>
+</main>
+
+</body>
+</html>
