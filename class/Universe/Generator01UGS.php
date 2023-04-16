@@ -21,67 +21,73 @@ class Generator01UGS extends AbstractUniverseGenerator {
 	protected function generate():array {
 		$data = [
 			"brightness" => [],
+			"r" => [],
+			"g" => [],
+			"b" => [],
 		];
 
-		$noise = new Simplex(...$this->generateRandomIntArray());
+		$noiseBrightness = new Simplex(...$this->generateRandomIntArray());
+		$noiseR = new Simplex(...$this->generateRandomIntArray());
+		$noiseG = new Simplex(...$this->generateRandomIntArray());
+		$noiseB = new Simplex(...$this->generateRandomIntArray());
 
-		for($y = Generator02LGS::MIN; $y < Generator02LGS::MAX; $y++) {
-			$row = [];
+		$size = Generator02LGS::MAX - Generator02LGS::MIN;
 
-			for($x = Generator02LGS::MIN; $x < Generator02LGS::MAX; $x++) {
-				$mappedX = $this->map(
-					$x,
-					Generator02LGS::MIN,
-					Generator02LGS::MAX,
-					0,
-					1,
-				);
-				$mappedY = $this->map(
-					$y,
-					Generator02LGS::MIN,
-					Generator02LGS::MAX,
-					0,
-					1,
-				);
-				$value = $noise->valueAt($mappedX, $mappedY);
-				array_push($row, $value);
+		$gridX = $this->ugs[0];
+		$gridY = $this->ugs[1];
+
+		for($y = 0; $y < $size; $y++) {
+			$rowBrightness = [];
+			$rowR = [];
+			$rowG = [];
+			$rowB = [];
+
+			for($x = 0; $x < $size; $x++) {
+				$mappedX = ($x / $size) + $gridX;
+				$mappedY = ($y / $size) + $gridY;
+
+				$brightness = round($noiseBrightness->valueAt($mappedX, $mappedY), 3);
+				$r = round($noiseR->valueAt($mappedX, $mappedY), 3);
+				$g = round($noiseG->valueAt($mappedX, $mappedY), 3);
+				$b = round($noiseB->valueAt($mappedX, $mappedY), 3);
+
+				array_push($rowBrightness, $brightness);
+				array_push($rowR, $r);
+				array_push($rowG, $g);
+				array_push($rowB, $b);
 			}
 
-			array_push($data["brightness"], $row);
+			array_push($data["brightness"], $rowBrightness);
+			array_push($data["r"], $rowR);
+			array_push($data["g"], $rowG);
+			array_push($data["b"], $rowB);
 		}
 
 		return $data;
 	}
 
 	protected function cache():void {
-		$brightnessData = $this->data["brightness"];
+		$image = imagecreatetruecolor(
+			count($this->data["brightness"]),
+			count($this->data["brightness"][0])
+		);
 
-		$image = imagecreatetruecolor(count($brightnessData[0]), count($brightnessData));
-		$c = [];
-		for($i = 0; $i < 256; $i++) {
-			array_push($c, imagecolorallocate($image, $i, $i, $i));
-		}
-		foreach($brightnessData as $y => $row) {
-			foreach($row as $x => $value) {
-				$cIndex = (int)floor(($value + 1) * 127);
-				imagesetpixel($image, $x, $y, $c[$cIndex]);
+		foreach($this->data["brightness"] as $y => $rowBrightness) {
+			foreach($rowBrightness as $x => $brightness) {
+				$scale = ($brightness + 1) / 2;
+
+				$r = pow(($this->data["r"][$y][$x] + 1) / 2, 3);
+				$g = pow(($this->data["g"][$y][$x] + 1) / 2, 3);
+				$b = pow(($this->data["b"][$y][$x] + 1) / 2, 3);
+				$ra = floor(($r * $g * $b) * $r * $scale * 10000);
+				$ga = floor(($r * $g * $b) * $g * $scale * 10000);
+				$ba = floor(($r * $g * $b) * $b * $scale * 10000);
+				$c = imagecolorclosest($image, min($ra, 255), min($ga, 255), min($ba, 255));
+				imagesetpixel($image, $x, $y, $c);
 			}
 		}
 
-		$coords = "ugs_";
-		if($this->ugs[0] >= 0) {
-			$coords .= "+";
-		}
-		$coords .= $this->ugs[0];
-		$coords .= ":";
-		if($this->ugs[1] >= 0) {
-			$coords .= "+";
-		}
-		$coords .= $this->ugs[1];
-
-// TODO: Generate the different colour maps here, storing individually in the dirPath, then combining for the overall image in the parent directory, named by the $coords.
-
-		imagepng($image, "$this->dirPath/brightness.png");
+		imagepng($image, "$this->dirPath/cMap.png");
 	}
 
 	/** @return array<int> */

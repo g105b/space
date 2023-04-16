@@ -22,9 +22,9 @@ abstract class AbstractUniverseGenerator {
 	public readonly array $ggs;
 	/** @var array<int, int> */
 	public readonly array $sgs;
+
 	/** @var array<float, float> */
 	public readonly array $ssc;
-
 	public readonly string $dirPath;
 	public readonly array $data;
 
@@ -33,7 +33,7 @@ abstract class AbstractUniverseGenerator {
 		protected readonly ?array $prevData = null,
 	) {
 		$this->rand = new Random(
-			new StringSeed($locator)
+			new StringSeed($this->getMultiverse($locator))
 		);
 		$this->extractLocatorParts($locator);
 		$this->dirPath = $this->getDirPath();
@@ -41,8 +41,10 @@ abstract class AbstractUniverseGenerator {
 			mkdir($this->dirPath, recursive: true);
 		}
 
-		$this->data = $this->generate();
-		$this->cache();
+//		if(!is_dir($this->dirPath)) {
+			$this->data = $this->generate();
+			$this->cache();
+//		}
 	}
 
 	abstract protected function generate():array;
@@ -50,22 +52,34 @@ abstract class AbstractUniverseGenerator {
 	abstract protected function cache():void;
 
 	/**
-	 * @param float $value the incoming value to be converted
-	 * @param float $lowCurrent lower bound of the value's current range
-	 * @param float $highCurrent upper bound of the value's current range
-	 * @param float $lowTarget lower bound of the value's target range
-	 * @param float $highTarget upper bound of the value's target range
+	 * @param float $n the incoming value to be converted
+	 * @param float $start1 lower bound of the value's current range
+	 * @param float $stop1 upper bound of the value's current range
+	 * @param float $start2 lower bound of the value's target range
+	 * @param float $stop2 upper bound of the value's target range
 	 * @return float
 	 */
 	protected function map(
-		float $value,
-		float $lowCurrent,
-		float $highCurrent,
-		float $lowTarget,
-		float $highTarget,
+		float $n, //$value
+		float $start1, //$lowCurrent
+		float $stop1, //$highCurrent
+		float $start2, //$lowTarget
+		float $stop2, //$highTarget
+		bool $withinBounds = true,
 	):float {
-		return ($value / ($highCurrent - $lowCurrent))
-			* ($highTarget - $lowTarget) + $lowTarget;
+		$newval = ($n - $start1) / ($stop1 - $start1) * ($stop2 - $start2) + $start2;
+		if(!$withinBounds) {
+			return $newval;
+		}
+		if ($start2 < $stop2) {
+			return $this->constrain($newval, $start2, $stop2);
+		} else {
+			return $this->constrain($newval, $stop2, $start2);
+		}
+	}
+
+	private function constrain(float $n, float $low, float $high) {
+		return max(min($n, $high), $low);
 	}
 
 	protected function extractLocatorParts(string $locator):void {
@@ -172,5 +186,9 @@ abstract class AbstractUniverseGenerator {
 				}
 			}
 		}
+	}
+
+	private function getMultiverse(string $locator):string {
+		return strtok($locator, "@");
 	}
 }
