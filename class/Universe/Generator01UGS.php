@@ -36,6 +36,9 @@ class Generator01UGS extends AbstractUniverseGenerator {
 		$gridX = $this->ugs[0];
 		$gridY = $this->ugs[1];
 
+		$starCount = 0;
+		$starThreshold = 1.75;
+
 		for($y = 0; $y < $size; $y++) {
 			$rowBrightness = [];
 			$rowR = [];
@@ -50,6 +53,9 @@ class Generator01UGS extends AbstractUniverseGenerator {
 				$r = round($noiseR->valueAt($mappedX, $mappedY), 3);
 				$g = round($noiseG->valueAt($mappedX, $mappedY), 3);
 				$b = round($noiseB->valueAt($mappedX, $mappedY), 3);
+				if($brightness + $r + $g + $b > $starThreshold) {
+					$starCount++;
+				}
 
 				array_push($rowBrightness, $brightness);
 				array_push($rowR, $r);
@@ -62,6 +68,38 @@ class Generator01UGS extends AbstractUniverseGenerator {
 			array_push($data["g"], $rowG);
 			array_push($data["b"], $rowB);
 		}
+
+		// Generate the visible stars:
+		for($i = 0; $i < $starCount * 10; $i++) {
+			$x = $this->rand->getInt(0, $size - 1);
+			$y = $this->rand->getInt(0, $size - 1);
+			$dist = $this->rand->getInt(0, $size / 4);
+			$angle = $this->rand->getScalar(360) * (pi() / 180);
+			$multiplier = $this->rand->getScalar(0.5) + 1;
+			$combined = array_sum([
+				$data["brightness"][$y][$x],
+				$data["r"][$y][$x],
+				$data["g"][$y][$x],
+				$data["b"][$y][$x],
+			]);
+			if($combined > $starThreshold) {
+				$newX = floor($x + ($dist * cos($angle)));
+				$newY = floor($y + ($dist * sin($angle)));
+				if($newX < 0 || $newX >= $size || $newY < 0 || $newY >= $size) {
+					continue;
+				}
+
+				$data["brightness"][$newY][$newX] *= $multiplier;
+				$data["r"][$newY][$newX] *= $multiplier;
+				$data["g"][$newY][$newX] *= $multiplier;
+				$data["b"][$newY][$newX] *= $multiplier;
+			}
+		}
+
+		array_walk_recursive($data, function(float &$value) {
+			$value = min($value, 1);
+			$value = max(-1, $value);
+		});
 
 		return $data;
 	}
