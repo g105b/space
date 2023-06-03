@@ -3,8 +3,8 @@ namespace Space\Universe;
 
 class Generator03GGS extends AbstractUniverseGenerator {
 	public const REGEX = Generator02LGS::REGEX . " ggs=(?P<GGS_X>[+-]\d+):(?P<GGS_Y>[+-]\d+)";
-	public const MIN = -30;
-	public const MAX = +30;
+	public const MIN = -100;
+	public const MAX = +100;
 
 	public function __toString():string {
 		// TODO: Implement __toString() method.

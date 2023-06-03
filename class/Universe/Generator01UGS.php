@@ -74,8 +74,8 @@ class Generator01UGS extends AbstractUniverseGenerator {
 			$x = $this->rand->getInt(0, $size - 1);
 			$y = $this->rand->getInt(0, $size - 1);
 			$dist = $this->rand->getInt(0, $size / 4);
-			$angle = $this->rand->getScalar(360) * (pi() / 180);
-			$multiplier = $this->rand->getScalar(0.5) + 1;
+			$angle = ($this->rand->getInt(0, 3599) / 1000) * (pi() / 180);
+			$multiplier = ($this->rand->getInt(0, 500) / 1000) + 1;
 			$combined = array_sum([
 				$data["brightness"][$y][$x],
 				$data["r"][$y][$x],
@@ -126,14 +126,5 @@ class Generator01UGS extends AbstractUniverseGenerator {
 		}
 
 		imagepng($image, "$this->dirPath/cMap.png");
-	}
-
-	/** @return array<int> */
-	private function generateRandomIntArray():array {
-		$intArray = [];
-		for($i = 0; $i < 256; $i ++) {
-			array_push($intArray, $this->rand->getInt(0, 255));
-		}
-		return $intArray;
 	}
 }

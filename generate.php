@@ -1,36 +1,62 @@
 <?php
 use Space\Universe\Generator01UGS;
+use Space\Universe\Generator02LGS;
 
 require "vendor/autoload.php";
 
-start:
-$name = bin2hex(random_bytes(32));
-$name = "default";
-$width = $height = 6;
-$image = imagecreatetruecolor(20 * $width, 20 * $height);
+$config = parse_ini_file("config.ini", true);
+if(file_exists("config.dev.ini")) {
+	$config = array_merge($config, parse_ini_file("config.dev.ini", true));
+}
+if(file_exists("config.production.ini")) {
+	$config = array_merge($config, parse_ini_file("config.production.ini", true));
+}
 
-for($y = -floor($height / 2); $y < floor($height / 2); $y++) {
-	for($x = -floor($width / 2); $x < floor($width / 2); $x++) {
-		echo "$x:$y", PHP_EOL;
-		$coords = $x >= 0 ? "+$x" : $x;
-		$coords .= ":";
-		$coords .= $y >= 0 ? "+$y" : $y;
-		$generator = new Generator01UGS("$name@ugs=$coords");
-		$cMapFile = "data/universe/$name/ugs_$coords/cMap.png";
-		$cMap = imagecreatefrompng($cMapFile);
-		imagecopyresampled(
-			$image,
-			$cMap,
-			($width * 10) + ($x * 20),
-			($height * 10) + ($y * 20),
-			0,
-			0,
-			20,
-			20,
-			200,
-			200,
-		);
+$name = $config["app"]["universe_id"];
+
+ugs:
+
+$ugsWidth = $ugsHeight = 2;
+
+$lgsWidth = 2;
+$lgsHeight = 2;
+
+$image = imagecreatetruecolor(20 * $ugsWidth, 20 * $ugsHeight);
+
+for($ucsY = -floor($ugsHeight / 2); $ucsY < floor($ugsHeight / 2); $ucsY++) {
+	for($ugsX = -floor($ugsWidth / 2); $ugsX < floor($ugsWidth / 2); $ugsX++) {
+		$ugsCoords = $ugsX >= 0 ? "+$ugsX" : $ugsX;
+		$ugsCoords .= ":";
+		$ugsCoords .= $ucsY >= 0 ? "+$ucsY" : $ucsY;
+		echo "UGS $ugsCoords", PHP_EOL;
+		$ugsGenerator = new Generator01UGS("$name@ugs=$ugsCoords", true);
+		$ugsMapFile = "data/universe/$name/ugs_$ugsCoords/cMap.png";
+		$ugsMap = imagecreatefrompng($ugsMapFile);
+
+		for($lgsY = -floor($lgsHeight / 2); $lgsY < floor($lgsHeight / 2); $lgsY++) {
+			for($lgsX = -floor($lgsWidth / 2); $lgsX < floor($lgsWidth / 2); $lgsX++) {
+				$lgsCoords = $lgsX >= 0 ? "+$lgsX" : $lgsX;
+				$lgsCoords .= ":";
+				$lgsCoords .= $lgsY >= 0 ? "+$lgsY" : $lgsY;
+				echo "\tLGS $lgsCoords", PHP_EOL;
+
+				$lgsGenerator = new Generator02LGS("$name@ugs=$ugsCoords lgs=$lgsCoords", false);
+
+			}
+		}
+//		imagecopyresampled(
+//			$image,
+//			$cMap,
+//			($width * 10) + ($ugsX * 20),
+//			($height * 10) + ($ucsY * 20),
+//			0,
+//			0,
+//			20,
+//			20,
+//			200,
+//			200,
+//		);
 	}
 }
 
-imagepng($image, "overview.png");
+//imagepng($image, "overview.png");

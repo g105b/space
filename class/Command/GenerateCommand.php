@@ -12,35 +12,35 @@ use Space\Universe\Generator05SPS;
 
 class GenerateCommand extends Command {
 	public function run(ArgumentValueList $arguments = null):void {
-		$multiverseId = $arguments->get("multiverse");
+		$universeId = $arguments->get("universe");
 		$usc = $arguments->get("ugs");
-		$locator = implode("@", [$multiverseId, "ugs=$usc"]);
+		$locator = implode("@", [$universeId, "ugs=$usc"]);
 
 		$generator = new Generator01UGS($locator);
 
 		if($lgs = $arguments->get("lgs", "")->get()) {
 			$locator .= " lgs=$lgs";
-			$generator = new Generator02LGS($locator, $generator->data);
+			$generator = new Generator02LGS($locator);
 		}
 		if($ggs = $arguments->get("ggs", "")->get()) {
 			$locator .= " ggs=$ggs";
-			$generator = new Generator03GGS($locator, $generator->data);
+			$generator = new Generator03GGS($locator);
 		}
 		if($sgs = $arguments->get("sgs", "")->get()) {
 			$locator .= " sgs=$sgs";
-			$generator = new Generator04SGS($locator, $generator->data);
+			$generator = new Generator04SGS($locator);
 		}
 		if($sps = $arguments->get("sps", "")->get()) {
 			$locator .= " sps=$sps";
-			$generator = new Generator05SPS($locator, $generator->data);
+			$generator = new Generator05SPS($locator);
 		}
 		if($gps = $arguments->get("gps", "")->get()) {
 			$locator .= " gps=$gps";
-			$generator = new Generator06GPS($locator, $generator->data);
+			$generator = new Generator06GPS($locator);
 		}
 		if($inm = $arguments->get("inm", "")->get()) {
 			$locator .= " inm=$inm";
-			$generator = new Generator07INM($locator, $generator->data);
+			$generator = new Generator07INM($locator);
 		}
 
 		$this->writeLine($generator);
@@ -64,7 +64,7 @@ class GenerateCommand extends Command {
 
 	public function getRequiredParameterList():array {
 		return [
-			new Parameter(true, "multiverse"),
+			new Parameter(true, "universe"),
 			new Parameter(true, "ugs")
 		];
 	}

@@ -7,13 +7,13 @@ use OutOfBoundsException;
 
 abstract class AbstractUniverseGenerator {
 	public const CODE = "xyz";
-	public const REGEX = "(?P<MULTIVERSE_ID>[^@]+)@";
+	public const REGEX = "(?P<UNIVERSE_ID>[^@]+)@";
 	public const MIN = 0;
 	public const MAX = 0;
 
 	protected Random $rand;
 
-	public readonly string $multiverseId;
+	public readonly string $universeId;
 	/** @var array<int, int> */
 	public readonly array $ugs;
 	/** @var array<int, int> */
@@ -30,10 +30,10 @@ abstract class AbstractUniverseGenerator {
 
 	public function __construct(
 		public readonly string $locator,
-		protected readonly ?array $prevData = null,
+		bool $useCache = true,
 	) {
 		$this->rand = new Random(
-			new StringSeed($this->getMultiverse($locator))
+			new StringSeed($this->getUniverse($locator))
 		);
 		$this->extractLocatorParts($locator);
 		$this->dirPath = $this->getDirPath();
@@ -41,10 +41,10 @@ abstract class AbstractUniverseGenerator {
 			mkdir($this->dirPath, recursive: true);
 		}
 
-//		if(!is_dir($this->dirPath)) {
+		if(!$useCache || empty(glob($this->dirPath . "/*.*"))) {
 			$this->data = $this->generate();
 			$this->cache();
-//		}
+		}
 	}
 
 	abstract protected function generate():array;
@@ -89,7 +89,7 @@ abstract class AbstractUniverseGenerator {
 			);
 		}
 
-		$this->multiverseId = $matches["MULTIVERSE_ID"];
+		$this->universeId = $matches["UNIVERSE_ID"];
 		if(isset($matches["UGS_X"]) && isset($matches["UGS_Y"])) {
 			$this->ugs = $this->extractCoords("UGS", $matches);
 		}
@@ -115,8 +115,17 @@ abstract class AbstractUniverseGenerator {
 		}
 	}
 
+	/** @return array<int> */
+	protected function generateRandomIntArray(int $length = 256):array {
+		$intArray = [];
+		for($i = 0; $i < $length; $i ++) {
+			array_push($intArray, $this->rand->getInt(0, 255));
+		}
+		return $intArray;
+	}
+
 	private function getDirPath():string {
-		$dirPath = "data/universe/$this->multiverseId";
+		$dirPath = "data/universe/$this->universeId";
 
 		if(isset($this->ugs)) {
 			$dirPath .="/ugs_";
@@ -125,6 +134,15 @@ abstract class AbstractUniverseGenerator {
 			$dirPath .= ":";
 			$dirPath .= ($this->ugs[1] >= 0) ? "+" : "";
 			$dirPath .= $this->ugs[1];
+		}
+
+		if(isset($this->lgs)) {
+			$dirPath .= "/lgs_";
+			$dirPath .= ($this->lgs[0] >= 0) ? "+" : "";
+			$dirPath .= $this->lgs[0];
+			$dirPath .= ":";
+			$dirPath .= ($this->lgs[1] >= 0) ? "+" : "";
+			$dirPath .= $this->lgs[1];
 		}
 
 		return $dirPath;
@@ -188,7 +206,7 @@ abstract class AbstractUniverseGenerator {
 		}
 	}
 
-	private function getMultiverse(string $locator):string {
+	private function getUniverse(string $locator):string {
 		return strtok($locator, "@");
 	}
 }

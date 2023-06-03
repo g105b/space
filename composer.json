@@ -1,5 +1,6 @@
 {
 	"require": {
+		"php": ">=8.2",
 		"ext-gd": "*",
 
 		"phpgt/webengine": "dev-master",
