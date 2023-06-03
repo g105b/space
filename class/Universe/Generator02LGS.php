@@ -33,6 +33,8 @@ class Generator02LGS extends AbstractUniverseGenerator {
 		$data["g"] = $lgsColour["green"] / 255;
 		$data["b"] = $lgsColour["blue"] / 255;
 
+		$totalBrightness = 0;
+
 		for($y = 0; $y < $size; $y++) {
 			$rowBrightness = [];
 
@@ -43,6 +45,7 @@ class Generator02LGS extends AbstractUniverseGenerator {
 				$brightness += ($data["r"] + $data["g"] + $data["b"]) / 10;
 				$brightness = min(1.0, $brightness);
 				array_push($rowBrightness, $brightness);
+				$totalBrightness += $brightness;
 			}
 
 			array_push($data["brightness"], $rowBrightness);
@@ -52,20 +55,11 @@ class Generator02LGS extends AbstractUniverseGenerator {
 		// LGS cells in each UGS cell is 200x200 (40,000)
 		// So, average star count per LGS cell is 400,000,000,000 / 40,000
 		// = 10,000,000
-// TODO: Average star count is 10,000,000 but this should be on a cell where there's an average brightness of 127 out of 255.
-// On darker cells, this should be much lower. However, because of the density, I don't think it matters, visually speaking.
-		$starCount = 10_000_000;
-		for($i = 0; $i < $starCount; $i += 100) {
-			$x = rand(0, $size - 1);
-			$y = rand(0, $size - 1);
-			$brightness = $data["brightness"][$y][$x];
-			if(!isset($data["starBrightness"][$y])) {
-				$data["starBrightness"][$y] = [];
-			}
-			if(!isset($data["starBrightness"][$y][$x])) {
-				$data["starBrightness"][$y][$x] = 0;
-			}
-			$data["starBrightness"][$y][$x] += ($brightness + 1) / 2;
+		for($i = 0; $i < $totalBrightness; $i ++) {
+			$x = $this->rand->getInt(0, $size - 1);
+			$y = $this->rand->getInt(0, $size - 1);
+			$brightness = $this->rand->getInt(0, 2);
+			$data["brightness"][$y][$x] += $brightness;
 		}
 
 		return $data;
