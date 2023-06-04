@@ -5,7 +5,7 @@ use Gt\Cli\Argument\ArgumentValueList;
 use Gt\Cli\Command\Command;
 use Gt\Cli\Parameter\Parameter;
 use Space\Universe\Generator01UGS;
-use Space\Universe\Generator02LGS;
+use Space\Universe\Generator02FGS;
 use Space\Universe\Generator03GGS;
 use Space\Universe\Generator04SGS;
 use Space\Universe\Generator05SPS;
@@ -18,9 +18,9 @@ class GenerateCommand extends Command {
 
 		$generator = new Generator01UGS($locator);
 
-		if($lgs = $arguments->get("lgs", "")->get()) {
-			$locator .= " lgs=$lgs";
-			$generator = new Generator02LGS($locator);
+		if($fgs = $arguments->get("fgs", "")->get()) {
+			$locator .= " fgs=$fgs";
+			$generator = new Generator02FGS($locator);
 		}
 		if($ggs = $arguments->get("ggs", "")->get()) {
 			$locator .= " ggs=$ggs";
@@ -71,7 +71,7 @@ class GenerateCommand extends Command {
 
 	public function getOptionalParameterList():array {
 		return [
-			new Parameter(true, "lgs"),
+			new Parameter(true, "fgs"),
 			new Parameter(true, "ggs"),
 			new Parameter(true, "sgs"),
 			new Parameter(true, "sps"),

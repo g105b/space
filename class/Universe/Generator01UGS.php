@@ -31,7 +31,7 @@ class Generator01UGS extends AbstractUniverseGenerator {
 		$noiseG = new Simplex(...$this->generateRandomIntArray());
 		$noiseB = new Simplex(...$this->generateRandomIntArray());
 
-		$size = Generator02LGS::MAX - Generator02LGS::MIN;
+		$size = Generator02FGS::MAX - Generator02FGS::MIN;
 
 		$gridX = $this->ugs[0];
 		$gridY = $this->ugs[1];

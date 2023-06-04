@@ -1,6 +1,6 @@
 <?php
 use Space\Universe\Generator01UGS;
-use Space\Universe\Generator02LGS;
+use Space\Universe\Generator02FGS;
 
 require "vendor/autoload.php";
 
@@ -36,11 +36,13 @@ for($ucsY = -floor($ugsHeight / 2); $ucsY < floor($ugsHeight / 2); $ucsY++) {
 		for($lgsY = -floor($lgsHeight / 2); $lgsY < floor($lgsHeight / 2); $lgsY++) {
 			for($lgsX = -floor($lgsWidth / 2); $lgsX < floor($lgsWidth / 2); $lgsX++) {
 				$lgsCoords = $lgsX >= 0 ? "+$lgsX" : $lgsX;
+//				$lgsCoords = "+27";
 				$lgsCoords .= ":";
 				$lgsCoords .= $lgsY >= 0 ? "+$lgsY" : $lgsY;
-				echo "\tLGS $lgsCoords", PHP_EOL;
+//				$lgsCoords .= "-54";
+				echo "\tFGS $lgsCoords", PHP_EOL;
 
-				$lgsGenerator = new Generator02LGS("$name@ugs=$ugsCoords lgs=$lgsCoords", false);
+				$lgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$lgsCoords", false);
 
 			}
 		}

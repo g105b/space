@@ -3,9 +3,9 @@ namespace Space\Universe;
 
 use Space\Noise\Simplex;
 
-class Generator02LGS extends AbstractUniverseGenerator {
-	public const CODE = "lgc";
-	public const REGEX = Generator01UGS::REGEX . " lgs=(?P<LGS_X>[+-]\d+):(?P<LGS_Y>[+-]\d+)";
+class Generator02FGS extends AbstractUniverseGenerator {
+	public const CODE = "fgs";
+	public const REGEX = Generator01UGS::REGEX . " fgs=(?P<FGS_X>[+-]\d+):(?P<FGS_Y>[+-]\d+)";
 	public const MIN = -100;
 	public const MAX = +100;
 
@@ -23,15 +23,15 @@ class Generator02LGS extends AbstractUniverseGenerator {
 		$noiseB = new Simplex(...$this->generateRandomIntArray());
 
 		$size = Generator03GGS::MAX - Generator03GGS::MIN;
-		$gridX = $this->lgs[0] + ($size / 2);
-		$gridY = $this->lgs[1] + ($size / 2);
+		$gridX = $this->fgs[0] + ($size / 2);
+		$gridY = $this->fgs[1] + ($size / 2);
 
 		$ugsImage = imagecreatefrompng($this->dirPath . "/../cMap.png");
-		$lgsColour = imagecolorsforindex($ugsImage, imagecolorat($ugsImage, $gridX, $gridY));
+		$fgsColour = imagecolorsforindex($ugsImage, imagecolorat($ugsImage, $gridX, $gridY));
 
-		$data["r"] = $lgsColour["red"] / 255;
-		$data["g"] = $lgsColour["green"] / 255;
-		$data["b"] = $lgsColour["blue"] / 255;
+		$data["r"] = $fgsColour["red"] / 255;
+		$data["g"] = $fgsColour["green"] / 255;
+		$data["b"] = $fgsColour["blue"] / 255;
 
 		$totalBrightness = 0;
 
@@ -52,13 +52,18 @@ class Generator02LGS extends AbstractUniverseGenerator {
 		}
 
 		// Star count in Milky Way galaxy is 400,000,000,000
-		// LGS cells in each UGS cell is 200x200 (40,000)
-		// So, average star count per LGS cell is 400,000,000,000 / 40,000
+		// FGS cells in each UGS cell is 200x200 (40,000)
+		// So, average star count per FGS cell is 400,000,000,000 / 40,000
 		// = 10,000,000
 		for($i = 0; $i < $totalBrightness; $i ++) {
 			$x = $this->rand->getInt(0, $size - 1);
 			$y = $this->rand->getInt(0, $size - 1);
 			$brightness = $this->rand->getInt(0, 2);
+
+			if($i > ($totalBrightness * 0.8)) {
+				$brightness *= 3;
+			}
+
 			$data["brightness"][$y][$x] += $brightness;
 		}
 

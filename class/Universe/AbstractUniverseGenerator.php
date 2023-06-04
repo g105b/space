@@ -17,7 +17,7 @@ abstract class AbstractUniverseGenerator {
 	/** @var array<int, int> */
 	public readonly array $ugs;
 	/** @var array<int, int> */
-	public readonly array $lgs;
+	public readonly array $fgs;
 	/** @var array<int, int> */
 	public readonly array $ggs;
 	/** @var array<int, int> */
@@ -94,9 +94,9 @@ abstract class AbstractUniverseGenerator {
 			$this->ugs = $this->extractCoords("UGS", $matches);
 		}
 
-		if(isset($matches["LGS_X"]) && isset($matches["LGS_Y"])) {
-			$this->lgs = $this->extractCoords("LGS", $matches);
-			$this->clamp("LGS", $this->lgs, -100, 100);
+		if(isset($matches["FGS_X"]) && isset($matches["FGS_Y"])) {
+			$this->fgs = $this->extractCoords("FGS", $matches);
+			$this->clamp("FGS", $this->fgs, -100, 100);
 		}
 
 		if(isset($matches["GGS_X"]) && isset($matches["GGS_Y"])) {
@@ -136,13 +136,13 @@ abstract class AbstractUniverseGenerator {
 			$dirPath .= $this->ugs[1];
 		}
 
-		if(isset($this->lgs)) {
-			$dirPath .= "/lgs_";
-			$dirPath .= ($this->lgs[0] >= 0) ? "+" : "";
-			$dirPath .= $this->lgs[0];
+		if(isset($this->fgs)) {
+			$dirPath .= "/fgs_";
+			$dirPath .= ($this->fgs[0] >= 0) ? "+" : "";
+			$dirPath .= $this->fgs[0];
 			$dirPath .= ":";
-			$dirPath .= ($this->lgs[1] >= 0) ? "+" : "";
-			$dirPath .= $this->lgs[1];
+			$dirPath .= ($this->fgs[1] >= 0) ? "+" : "";
+			$dirPath .= $this->fgs[1];
 		}
 
 		return $dirPath;
