@@ -25,33 +25,30 @@ class Generator02FGS extends AbstractUniverseGenerator {
 			"r" => $fgsColour["red"] / 255,
 			"g" => $fgsColour["green"] / 255,
 			"b" => $fgsColour["blue"] / 255,
-			"clouds" => [],
+			"filaments" => [],
 		];
 
 		$totalBrightness = 0;
 
 		for($y = 0; $y < $size; $y++) {
 			$rowBrightness = [];
-			$rowClouds = [];
+			$rowFilament = [];
 
 			for($x = 0; $x < $size; $x++) {
-				$mappedX = (($x / $size) + $gridX);
-				$mappedY = (($y / $size) + $gridY);
+				$mappedX = ($x / $size) + $gridX;
+				$mappedY = ($y / $size) + $gridY;
 				$brightness = round($noiseBrightness->valueAt($mappedX, $mappedY), 3);
 				$brightness += ($data["r"] + $data["g"] + $data["b"]) / 10;
 				$brightness = min(1.0, $brightness);
 				array_push($rowBrightness, $brightness);
 				$totalBrightness += $brightness;
 
-				$mappedX = (($x / $size) + $gridX);
-				$mappedY = (($y / $size) + $gridY);
-
-				$clouds = round($noiseBrightness->valueAt($mappedX * 6, $mappedY * 6), 3);
-				array_push($rowClouds, $clouds);
+				$filament = round($noiseClouds->valueAt($mappedX * 6, $mappedY * 6), 3);
+				array_push($rowFilament, $filament);
 			}
 
 			array_push($data["brightness"], $rowBrightness);
-			array_push($data["clouds"], $rowClouds);
+			array_push($data["filaments"], $rowFilament);
 		}
 
 		// Star count in Milky Way galaxy is 400,000,000,000
@@ -96,16 +93,16 @@ class Generator02FGS extends AbstractUniverseGenerator {
 		$reductionFactor = 1;
 		foreach($brightnessData as $y => $rowBrightness) {
 			foreach($rowBrightness as $x => $brightness) {
-				$cloudScale = (($this->data["clouds"][$y][$x] + 1) / 4);
+				$filamentScale = (($this->data["filaments"][$y][$x] + 1) / 4);
 				$scale = ($brightness + 1) / 2;
 				$scale *= $reductionFactor;
 				$r = $this->data["r"] * $scale;
 				$g = $this->data["g"] * $scale;
 				$b = $this->data["b"] * $scale;
 
-				$r += $cloudScale;
-				$g += $cloudScale;
-				$b += $cloudScale;
+				$r += $filamentScale;
+				$g += $filamentScale;
+				$b += $filamentScale;
 
 				$r = floor($r * 255);
 				$r = min($r, 255);

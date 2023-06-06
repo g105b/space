@@ -145,6 +145,15 @@ abstract class AbstractUniverseGenerator {
 			$dirPath .= $this->fgs[1];
 		}
 
+		if(isset($this->ggs)) {
+			$dirPath .= "/ggs_";
+			$dirPath .= ($this->ggs[0] >= 0) ? "+" : "";
+			$dirPath .= $this->ggs[0];
+			$dirPath .= ":";
+			$dirPath .= ($this->ggs[1] >= 0) ? "+" : "";
+			$dirPath .= $this->ggs[1];
+		}
+
 		return $dirPath;
 	}
 
