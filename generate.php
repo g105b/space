@@ -14,6 +14,11 @@ if(file_exists("config.production.ini")) {
 
 $name = $config["app"]["universe_id"];
 
+$ugsCoords = "+0:+0";
+$ugsGenerator = new Generator01UGS("$name@ugs=$ugsCoords", true);
+$fgsCoords = "+0:+0";
+$lgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$fgsCoords", false);
+exit;
 ugs:
 
 $ugsWidth = $ugsHeight = 2;
@@ -35,14 +40,14 @@ for($ucsY = -floor($ugsHeight / 2); $ucsY < floor($ugsHeight / 2); $ucsY++) {
 
 		for($lgsY = -floor($lgsHeight / 2); $lgsY < floor($lgsHeight / 2); $lgsY++) {
 			for($lgsX = -floor($lgsWidth / 2); $lgsX < floor($lgsWidth / 2); $lgsX++) {
-				$lgsCoords = $lgsX >= 0 ? "+$lgsX" : $lgsX;
+				$fgsCoords = $lgsX >= 0 ? "+$lgsX" : $lgsX;
 //				$lgsCoords = "+27";
-				$lgsCoords .= ":";
-				$lgsCoords .= $lgsY >= 0 ? "+$lgsY" : $lgsY;
+				$fgsCoords .= ":";
+				$fgsCoords .= $lgsY >= 0 ? "+$lgsY" : $lgsY;
 //				$lgsCoords .= "-54";
-				echo "\tFGS $lgsCoords", PHP_EOL;
+				echo "\tFGS $fgsCoords", PHP_EOL;
 
-				$lgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$lgsCoords", false);
+				$lgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$fgsCoords", false);
 
 			}
 		}
