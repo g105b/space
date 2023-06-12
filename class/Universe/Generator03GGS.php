@@ -6,21 +6,21 @@ use Space\Noise\Simplex;
 class Generator03GGS extends AbstractUniverseGenerator {
 	public const CODE = "ggs";
 	public const REGEX = Generator02FGS::REGEX . " ggs=(?P<GGS_X>[+-]\d+):(?P<GGS_Y>[+-]\d+)";
-	public const MIN = -100;
-	public const MAX = +100;
+	public const MIN = -64;
+	public const MAX = +64;
 
 	protected function generate():array {
 		$noiseBrightness = new Simplex(...$this->generateRandomIntArray());
 		$noiseStarDensity = new Simplex(...$this->generateRandomIntArray());
 
-		$size = Generator04SGS::MAX - Generator04SGS::MIN;
+		$size = self::RESOLUTION;
 		$fgsGridX = $this->fgs[0] + ($size / 2);
 		$fgsGridY = $this->fgs[1] + ($size / 2);
 		$gridX = $this->ggs[0] + ($size / 2);
 		$gridY = $this->ggs[1] + ($size / 2);
 
-		$ugsImage = imagecreatefrompng($this->dirPath . "/../cMap.png");
-		$fgsColour = imagecolorsforindex($ugsImage, imagecolorat($ugsImage, $fgsGridX, $fgsGridY));
+		$fgsImage = imagecreatefrompng($this->dirPath . "/../tc-fgs.png");
+		$fgsColour = imagecolorsforindex($fgsImage, imagecolorat($fgsImage, $fgsGridX, $fgsGridY));
 
 		$data = [
 			"brightness" => [],
@@ -36,7 +36,6 @@ class Generator03GGS extends AbstractUniverseGenerator {
 			$rowBrightness = [];
 
 			for($x = 0; $x < $size; $x++) {
-				/** @noinspection DuplicatedCode This is intentionally similar to FGS generation */
 				$mappedX = (($x / $size) + $gridX);
 				$mappedY = (($y / $size) + $gridY);
 				$brightness = round($noiseBrightness->valueAt($mappedX, $mappedY), 3);
@@ -49,15 +48,17 @@ class Generator03GGS extends AbstractUniverseGenerator {
 			array_push($data["brightness"], $rowBrightness);
 		}
 
-		for($i = 0; $i < $totalBrightness; $i++) {
+		for($i = 0; $i < $totalBrightness / 10; $i++) {
 			$x = $this->rand->getInt(0, $size - 1);
 			$y = $this->rand->getInt(0, $size - 1);
 
 			$mappedX = ($x / $size) + $gridX;
 			$mappedY = ($y / $size) + $gridY;
 
-			$brightness = $noiseStarDensity->valueAt($mappedX * 10, $mappedY * 10);
-			$data["stars"][$y][$x] = $brightness;
+			$brightness = $noiseStarDensity->valueAt($mappedX * 3, $mappedY * 3) ;
+			if($brightness > 0) {
+				$data["stars"][$y][$x] = $brightness;
+			}
 		}
 
 		foreach(array_keys($data["stars"]) as $y) {
@@ -122,6 +123,6 @@ class Generator03GGS extends AbstractUniverseGenerator {
 			}
 		}
 
-		imagepng($image, "$this->dirPath/cMap.png");
+		imagepng($image, "$this->dirPath/tc-ggs.png");
 	}
 }

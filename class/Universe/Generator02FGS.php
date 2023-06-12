@@ -6,18 +6,18 @@ use Space\Noise\Simplex;
 class Generator02FGS extends AbstractUniverseGenerator {
 	public const CODE = "fgs";
 	public const REGEX = Generator01UGS::REGEX . " fgs=(?P<FGS_X>[+-]\d+):(?P<FGS_Y>[+-]\d+)";
-	public const MIN = -100;
-	public const MAX = +100;
+	public const MIN = -64;
+	public const MAX = +64;
 
 	protected function generate():array {
 		$noiseBrightness = new Simplex(...$this->generateRandomIntArray());
 		$noiseClouds = new Simplex(...$this->generateRandomIntArray());
 
-		$size = Generator03GGS::MAX - Generator03GGS::MIN;
+		$size = self::RESOLUTION;
 		$gridX = $this->fgs[0] + ($size / 2);
 		$gridY = $this->fgs[1] + ($size / 2);
 
-		$ugsImage = imagecreatefrompng($this->dirPath . "/../cMap.png");
+		$ugsImage = imagecreatefrompng($this->dirPath . "/../tc-ugs.png");
 		$fgsColour = imagecolorsforindex($ugsImage, imagecolorat($ugsImage, $gridX, $gridY));
 
 		$data = [
@@ -52,9 +52,9 @@ class Generator02FGS extends AbstractUniverseGenerator {
 		}
 
 		// Star count in Milky Way galaxy is 400,000,000,000
-		// FGS cells in each UGS cell is 200x200 (40,000)
-		// So, average star count per FGS cell is 400,000,000,000 / 40,000
-		// = 10,000,000
+		// FGS cells in each UGS cell is 128x128 (16,384)
+		// So, average star count per FGS cell is 400,000,000,000 / 16,384
+		// = 24,414,062.5
 		for($i = 0; $i < $totalBrightness; $i ++) {
 			$x = $this->rand->getInt(0, $size - 1);
 			$y = $this->rand->getInt(0, $size - 1);
@@ -123,6 +123,6 @@ class Generator02FGS extends AbstractUniverseGenerator {
 			}
 		}
 
-		imagepng($image, "$this->dirPath/cMap.png");
+		imagepng($image, "$this->dirPath/tc-fgs.png");
 	}
 }

@@ -10,6 +10,7 @@ abstract class AbstractUniverseGenerator {
 	public const REGEX = "(?P<UNIVERSE_ID>[^@]+)@";
 	public const MIN = 0;
 	public const MAX = 0;
+	public const RESOLUTION = 128;
 
 	protected Random $rand;
 
@@ -152,6 +153,15 @@ abstract class AbstractUniverseGenerator {
 			$dirPath .= ":";
 			$dirPath .= ($this->ggs[1] >= 0) ? "+" : "";
 			$dirPath .= $this->ggs[1];
+		}
+
+		if(isset($this->sgs)) {
+			$dirPath .= "/sgs_";
+			$dirPath .= ($this->sgs[0] >= 0) ? "+" : "";
+			$dirPath .= $this->sgs[0];
+			$dirPath .= ":";
+			$dirPath .= ($this->sgs[1] >= 0) ? "+" : "";
+			$dirPath .= $this->sgs[1];
 		}
 
 		return $dirPath;

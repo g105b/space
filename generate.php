@@ -2,6 +2,7 @@
 use Space\Universe\Generator01UGS;
 use Space\Universe\Generator02FGS;
 use Space\Universe\Generator03GGS;
+use Space\Universe\Generator04SGS;
 
 require "vendor/autoload.php";
 
@@ -17,10 +18,14 @@ $name = $config["app"]["universe_id"];
 
 $ugsCoords = "+0:+0";
 $ugsGenerator = new Generator01UGS("$name@ugs=$ugsCoords", true);
+//$fgsCoords = "+14:-15";
 $fgsCoords = "+0:+0";
 $fgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$fgsCoords", false);
 $ggsCoords = "+0:+0";
 $ggsGenerator = new Generator03GGS("$name@ugs=$ugsCoords fgs=$fgsCoords ggs=$ggsCoords", false);
+//$sgsCoords = "+0:+0";
+$sgsCoords = "+1:+1";
+$sgsGenerator = new Generator04SGS("$name@ugs=$ugsCoords fgs=$fgsCoords ggs=$ggsCoords sgs=$sgsCoords", false);
 exit;
 ugs:
 

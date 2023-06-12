@@ -31,7 +31,7 @@ class Generator01UGS extends AbstractUniverseGenerator {
 		$noiseG = new Simplex(...$this->generateRandomIntArray());
 		$noiseB = new Simplex(...$this->generateRandomIntArray());
 
-		$size = Generator02FGS::MAX - Generator02FGS::MIN;
+		$size = self::RESOLUTION;
 
 		$gridX = $this->ugs[0];
 		$gridY = $this->ugs[1];
@@ -125,6 +125,6 @@ class Generator01UGS extends AbstractUniverseGenerator {
 			}
 		}
 
-		imagepng($image, "$this->dirPath/cMap.png");
+		imagepng($image, "$this->dirPath/tc-ugs.png");
 	}
 }

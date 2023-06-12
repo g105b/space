@@ -1,17 +1,149 @@
 <?php
 namespace Space\Universe;
 
-class Generator04SGS extends AbstractUniverseGenerator {
-	public const REGEX = Generator03GGS::REGEX . " sgc=(?P<SGS_X>[+-]\d+):(?P<SGS_Y>[+-]\d+)";
+use Space\Noise\Simplex;
 
-	public const MIN = -100;
-	public const MAX = +100;
+class Generator04SGS extends AbstractUniverseGenerator {
+	public const REGEX = Generator03GGS::REGEX . " sgs=(?P<SGS_X>[+-]\d+):(?P<SGS_Y>[+-]\d+)";
+
+	public const MIN = -64;
+	public const MAX = +64;
 
 	protected function generate():array {
-		// TODO: Implement generate() method.
+		$noiseBrightness = new Simplex(...$this->generateRandomIntArray());
+		$noiseStarDensity = new Simplex(...$this->generateRandomIntArray());
+		$size = self::RESOLUTION;
+
+		$fgsGridX = $this->fgs[0] + ($size / 2);
+		$fgsGridY = $this->fgs[1] + ($size / 2);
+		$gridX = $this->sgs[0] + ($size * (self::RESOLUTION / 2));
+		$gridY = $this->sgs[1] + ($size * (self::RESOLUTION / 2));
+
+		$fgsImage = imagecreatefrompng($this->dirPath . "/../../tc-fgs.png");
+		$fgsColour = imagecolorsforindex($fgsImage, imagecolorat($fgsImage, $fgsGridX, $fgsGridY));
+
+		$data = [
+			"brightness" => [],
+			"r" => $fgsColour["red"] / 255,
+			"g" => $fgsColour["green"] / 255,
+			"b" => $fgsColour["blue"] / 255,
+			"stars" => [],
+		];
+
+		$totalBrightness = 0;
+
+		for($y = 0; $y < $size; $y++) {
+			$rowBrightness = [];
+
+			for($x = 0; $x < $size; $x++) {
+				$mappedX = (($x / $size) + $gridX);
+				$mappedY = (($y / $size) + $gridY);
+				$brightness = round($noiseBrightness->valueAt($mappedX, $mappedY), 3);
+				$brightness += ($data["r"] + $data["g"] + $data["b"]) / 10;
+				$brightness = min(1.0, $brightness);
+				$brightness = max(-0.5, $brightness);
+				array_push($rowBrightness, $brightness);
+				$totalBrightness += $brightness;
+			}
+
+			array_push($data["brightness"], $rowBrightness);
+		}
+
+		$seedOffset = 65;
+		for($i = 0; $i < $seedOffset; $i++) {
+			$this->rand->getScalar();
+		}
+
+		for($i = 0; $i < $totalBrightness / 10; $i++) {
+			$x = $this->rand->getInt(0, $size - 1);
+			$y = $this->rand->getInt(0, $size - 1);
+
+			$mappedX = ($x / $size) + $gridX;
+			$mappedY = ($y / $size) + $gridY;
+
+			$x -= 53;
+			$y += 60;
+			if($x < 0) {
+				$x += self::RESOLUTION;
+			}
+			if($x > self::RESOLUTION) {
+				$x -= self::RESOLUTION;
+			}
+			if($y < 0) {
+				$y += self::RESOLUTION;
+			}
+			if($y > self::RESOLUTION) {
+				$y -= self::RESOLUTION;
+			}
+
+			$brightness = $noiseStarDensity->valueAt($mappedX * 3, $mappedY * 3) ;
+			if($brightness > 0.75) {
+				$data["stars"][$y][$x] = $brightness;
+			}
+		}
+
+		foreach(array_keys($data["stars"]) as $y) {
+			ksort($data["stars"][$y]);
+		}
+		ksort($data["stars"]);
+
+		return $data;
 	}
 
 	protected function cache():void {
-		// TODO: Implement cache() method.
+		$brightnessData = $this->data["brightness"];
+
+		$image = imagecreatetruecolor(
+			count($brightnessData),
+			count($brightnessData[0])
+		);
+
+		$brightestValue = 0;
+		array_walk_recursive(
+			$brightnessData,
+			function($brightness)use(&$brightestValue) {
+				if($brightness > $brightestValue) {
+					$brightestValue = $brightness;
+				}
+			}
+		);
+
+		$reductionFactor = 1;
+		foreach($brightnessData as $y => $rowBrightness) {
+			foreach($rowBrightness as $x => $brightness) {
+				$scale = ($brightness + 1) / 4;
+				$scale *= $reductionFactor;
+				$r = $this->data["r"] * $scale;
+				$g = $this->data["g"] * $scale;
+				$b = $this->data["b"] * $scale;
+
+				$r = floor($r * 255);
+				$r = min($r, 255);
+				$r = max(0, $r);
+				$g = floor($g * 255);
+				$g = min($g, 255);
+				$g = max(0, $g);
+				$b = floor($b * 255);
+				$b = min($b, 255);
+				$b = max(0, $b);
+
+				if(isset($this->data["stars"][$y][$x])) {
+					$starValue = $this->data["stars"][$y][$x];
+					$starValue = (($starValue + 1) / 2) * 255;
+					$r += $starValue;
+					$g += $starValue;
+					$b += $starValue;
+				}
+
+				$r = floor(min($r, 255));
+				$g = floor(min($g, 255));
+				$b = floor(min($b, 255));
+
+				$c = imagecolorclosest($image, $r, $g, $b);
+				imagesetpixel($image, $x, $y, $c);
+			}
+		}
+
+		imagepng($image, "$this->dirPath/tc-sgs.png");
 	}
 }
