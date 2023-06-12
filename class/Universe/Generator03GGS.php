@@ -55,6 +55,15 @@ class Generator03GGS extends AbstractUniverseGenerator {
 			$mappedX = ($x / $size) + $gridX;
 			$mappedY = ($y / $size) + $gridY;
 
+			$x -= 2;
+			$y -= 2;
+			if($x < 0) {
+				$x += self::RESOLUTION;
+			}
+			if($y < 0) {
+				$y += self::RESOLUTION;
+			}
+
 			$brightness = $noiseStarDensity->valueAt($mappedX * 3, $mappedY * 3) ;
 			if($brightness > 0) {
 				$data["stars"][$y][$x] = $brightness;
