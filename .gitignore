@@ -1,5 +1,6 @@
 /.idea/
-/data/universe/
+/data/universe/*
+!/data/universe/default
 /vendor/
 /www/
 /config.*.ini
