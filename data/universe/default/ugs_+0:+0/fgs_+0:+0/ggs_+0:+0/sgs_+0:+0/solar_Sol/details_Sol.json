@@ -1,0 +1,120 @@
+{
+	"units": {
+		"radius": "km",
+		"mass": "kg",
+		"longitude": "degrees",
+		"latitude": "degrees",
+		"orbit": "au",
+		"orbital_period": "year",
+		"rotation_period": "day",
+		"ring_density": "density"
+	},
+
+	"stars": [
+		{
+			"name": "Sun",
+			"radius": 6.957E+8,
+			"mass": 1.988435E+30,
+			"longitude": 0,
+			"orbit": 0,
+			"orbit_period": 0,
+			"planet_direction": "counterclockwise"
+		}
+	],
+
+	"planets": [
+		{
+			"name": "Mercury",
+			"type": "terrestrial",
+			"radius": 2441,
+			"mass": 3.302E+23,
+			"orbit": 0.38709893,
+			"orbit_period": 0.241,
+			"rotation_period": 58.646,
+			"ring_density": 0
+		},
+		{
+			"name": "Venus",
+			"type": "terrestrial",
+			"radius": 6052,
+			"mass": 4.8690E+24,
+			"orbit": 0.72333199,
+			"orbit_period": 0.615,
+			"rotation_period": 243.019,
+			"ring_density": 0
+		},
+		{
+			"name": "Earth",
+			"type": "terrestrial",
+			"radius": 6378,
+			"mass": 5.972E+24,
+			"orbit": 1.0,
+			"orbit_period": 1.000,
+			"rotation_period": 1.0,
+			"ring_density": 0
+		},
+		{
+			"name": "Mars",
+			"type": "terrestrial",
+			"radius": 3396,
+			"mass": 6.4191E+23,
+			"orbit": 1.52366231,
+			"orbit_period": 1.881,
+			"rotation_period": 1.026,
+			"ring_density": 0
+		},
+		{
+			"name": "Jupiter",
+			"type": "gas",
+			"radius": 71492,
+			"mass": 1.8987E+27,
+			"orbit": 5.20336301,
+			"orbit_period": 11.863,
+			"rotation_period": 0.414,
+			"ring_density": 0
+		},
+		{
+			"name": "Saturn",
+			"type": "gas",
+			"radius": 60268,
+			"mass": 5.6851E+26,
+			"orbit": 9.53707032,
+			"orbit_period": 29.447,
+			"rotation_period": 0.444,
+			"ring_density": 0.8
+		},
+		{
+			"name": "Uranus",
+			"type": "ice",
+			"radius": 25559,
+			"mass": 8.6849E+25,
+			"orbit": 19.19126393,
+			"orbit_period": 84.017,
+			"rotation_period": 0.718,
+			"ring_density": 0.1
+		},
+		{
+			"name": "Neptune",
+			"type": "ice",
+			"radius": 24764,
+			"mass": 1.0244E+26,
+			"orbit": 30.06896348,
+			"orbit_period": 164.791,
+			"rotation_period": 0.671,
+			"ring_density": 0.2
+		}
+	],
+
+	"asteroid belts": [
+		{
+			"name": "Main belt",
+			"inner_orbit": 2.1,
+			"outer_orbit": 3.3
+		},
+		{
+			"name": "Kuiper belt",
+			"inner_orbit": 30,
+			"outer_orbit": 50
+		}
+	]
+}
