@@ -1,41 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<meta name="description" content="Space" />
-	<meta name="theme-color" content="#000000" />
-	<title>Space</title>
 
-	<link rel="icon" href="/asset/favicon.svg" sizes="any" />
-	<link rel="stylesheet" href="/style.css" />
-	<link rel="manifest" href="/asset/manifest.json" />
-	<script src="/script.js" defer></script>
-</head>
-<body>
 
 <div id="screen">
 	<main>
-		<section id="game-view">View</section>
+		<section id="graphics">Graphics</section>
+		<section id="menu">
+			<a href="/navigate/" accesskey="n">Navigate</a>
+			<a href="/details/" accesskey="d">Details</a>
+			<a href="/items/" accesskey="i">Items</a>
+			<a href="/computer/" accesskey="c">Computer</a>
+		</section>
 		<section id="location">
-			<a href="/location/nav/">87:9<br />13b/76</a>
-			<a href="/location/context/">
+			<a href="/location/">
 				<span class="context">Walking</span>
 				<span class="location-name">Bunker Dormitories</span>
 			</a>
-			<a href="/location/navigate/">Navigate</a>
-		</section>
-		<section id="actions">
-			<a href="/actions/inventory/">Items</a>
-			<a href="/actions/trade/">Trade</a>
-			<a href="/actions/attack/">Attack</a>
-			<a href="/actions/help/">Help</a>
+			<a href="/location/details/">87:9<br />13b/76</a>
 		</section>
 		<section id="log">
 			<div>
 				<p>You wake up in one of many beds that fill the room. There are some other people sleeping.</p>
 				<p>The room smells stale and lifeless. You're underground, in an emergency bunker, due to the harsh conditions the planet is currently facing.</p>
 			</div>
+		</section>
+		<section id="actions">
+			<a href="/action/{{something}}" class="selected">
+				<span>Dorm bed</span>
+				<span>Go to sleep</span>
+			</a>
+			<a href="#" accesskey="x">
+				<span>Next</span>
+				<span class="count">1/5</span>
+			</a>
 		</section>
 	</main>
 </div>
