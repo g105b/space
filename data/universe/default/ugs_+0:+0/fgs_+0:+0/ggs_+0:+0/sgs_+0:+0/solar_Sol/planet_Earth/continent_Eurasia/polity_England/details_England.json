@@ -1,0 +1,304 @@
+{
+	"settlements": [
+		{
+			"name": "London",
+			"latitude": 51.5074,
+			"longitude": -0.1278,
+			"population": 8982000
+		},
+		{
+			"name": "Birmingham",
+			"latitude": 52.4862,
+			"longitude": -1.8904,
+			"population": 1141816
+		},
+		{
+			"name": "Leeds",
+			"latitude": 53.8008,
+			"longitude": -1.5491,
+			"population": 793139
+		},
+		{
+			"name": "Sheffield",
+			"latitude": 53.3811,
+			"longitude": -1.4701,
+			"population": 584853
+		},
+		{
+			"name": "Manchester",
+			"latitude": 53.4808,
+			"longitude": -2.2426,
+			"population": 547627
+		},
+		{
+			"name": "Bradford",
+			"latitude": 53.7960,
+			"longitude": -1.7595,
+			"population": 537173
+		},
+		{
+			"name": "Liverpool",
+			"latitude": 53.4084,
+			"longitude": -2.9916,
+			"population": 494814
+		},
+		{
+			"name": "Bristol",
+			"latitude": 51.4545,
+			"longitude": -2.5879,
+			"population": 463400
+		},
+		{
+			"name": "Newcastle upon Tyne",
+			"latitude": 54.9784,
+			"longitude": -1.6174,
+			"population": 300196
+		},
+		{
+			"name": "Sunderland",
+			"latitude": 54.9069,
+			"longitude": -1.3838,
+			"population": 277417
+		},
+		{
+			"name": "Wolverhampton",
+			"latitude": 52.5862,
+			"longitude": -2.1286,
+			"population": 262008
+		},
+		{
+			"name": "Southampton",
+			"latitude": 50.9097,
+			"longitude": -1.4044,
+			"population": 252796
+		},
+		{
+			"name": "Nottingham",
+			"latitude": 52.9548,
+			"longitude": -1.1581,
+			"population": 331069
+		},
+		{
+			"name": "Plymouth",
+			"latitude": 50.3755,
+			"longitude": -4.1427,
+			"population": 263100
+		},
+		{
+			"name": "Derby",
+			"latitude": 52.9225,
+			"longitude": -1.4746,
+			"population": 257174
+		},
+		{
+			"name": "Stoke-on-Trent",
+			"latitude": 53.0027,
+			"longitude": -2.1799,
+			"population": 372775
+		},
+		{
+			"name": "Reading",
+			"latitude": 51.4543,
+			"longitude": -0.9781,
+			"population": 163203
+		},
+		{
+			"name": "Hull",
+			"latitude": 53.7676,
+			"longitude": -0.3274,
+			"population": 259778
+		},
+		{
+			"name": "Luton",
+			"latitude": 51.8787,
+			"longitude": -0.4200,
+			"population": 213052
+		},
+		{
+			"name": "Coventry",
+			"latitude": 52.4068,
+			"longitude": -1.5197,
+			"population": 366785
+		},
+		{
+			"name": "Preston",
+			"latitude": 53.7632,
+			"longitude": -2.7031,
+			"population": 141818
+		},
+		{
+			"name": "Milton Keynes",
+			"latitude": 52.0406,
+			"longitude": -0.7594,
+			"population": 268607
+		},
+		{
+			"name": "Bournemouth",
+			"latitude": 50.7208,
+			"longitude": -1.8928,
+			"population": 188385
+		},
+		{
+			"name": "Norwich",
+			"latitude": 52.6309,
+			"longitude": 1.2974,
+			"population": 141137
+		},
+		{
+			"name": "Swindon",
+			"latitude": 51.5558,
+			"longitude": -1.7797,
+			"population": 221996
+		},
+		{
+			"name": "Swansea",
+			"latitude": 51.6214,
+			"longitude": -3.9436,
+			"population": 246466
+		},
+		{
+			"name": "Southend-on-Sea",
+			"latitude": 51.5459,
+			"longitude": 0.7077,
+			"population": 182463
+		},
+		{
+			"name": "Middlesbrough",
+			"latitude": 54.5762,
+			"longitude": -1.2348,
+			"population": 174700
+		},
+		{
+			"name": "Portsmouth",
+			"latitude": 50.8198,
+			"longitude": -1.0886,
+			"population": 238137
+		},
+		{
+			"name": "Peterborough",
+			"latitude": 52.5736,
+			"longitude": -0.2478,
+			"population": 202259
+		},
+		{
+			"name": "Northampton",
+			"latitude": 52.2405,
+			"longitude": -0.9027,
+			"population": 225146
+		},
+		{
+			"name": "Poole",
+			"latitude": 50.7156,
+			"longitude": -2.0000,
+			"population": 151500
+		},
+		{
+			"name": "Huddersfield",
+			"latitude": 53.6458,
+			"longitude": -1.7850,
+			"population": 162949
+		},
+		{
+			"name": "Oxford",
+			"latitude": 51.7520,
+			"longitude": -1.2577,
+			"population": 152457
+		},
+		{
+			"name": "Slough",
+			"latitude": 51.5105,
+			"longitude": -0.5950,
+			"population": 164455
+		},
+		{
+			"name": "York",
+			"latitude": 53.9590,
+			"longitude": -1.0815,
+			"population": 208200
+		},
+		{
+			"name": "Ipswich",
+			"latitude": 52.0567,
+			"longitude": 1.1482,
+			"population": 137500
+		},
+		{
+			"name": "Blackpool",
+			"latitude": 53.8175,
+			"longitude": -3.0357,
+			"population": 139720
+		},
+		{
+			"name": "Telford",
+			"latitude": 52.6784,
+			"longitude": -2.4476,
+			"population": 166641
+		},
+		{
+			"name": "Cambridge",
+			"latitude": 52.2053,
+			"longitude": 0.1218,
+			"population": 130000
+		},
+		{
+			"name": "Dundee",
+			"latitude": 56.4620,
+			"longitude": -2.9707,
+			"population": 148270
+		},
+		{
+			"name": "Gloucester",
+			"latitude": 51.8642,
+			"longitude": -2.2382,
+			"population": 129285
+		},
+		{
+			"name": "Blackburn",
+			"latitude": 53.7486,
+			"longitude": -2.4875,
+			"population": 117963
+		},
+		{
+			"name": "Basildon",
+			"latitude": 51.5761,
+			"longitude": 0.4886,
+			"population": 107123
+		},
+		{
+			"name": "Saint Helens",
+			"latitude": 53.4561,
+			"longitude": -2.7373,
+			"population": 102885
+		},
+		{
+			"name": "Colchester",
+			"latitude": 51.8959,
+			"longitude": 0.8919,
+			"population": 121859
+		},
+		{
+			"name": "Crawley",
+			"latitude": 51.1091,
+			"longitude": -0.1872,
+			"population": 112448
+		},
+		{
+			"name": "Woking",
+			"latitude": 51.3168,
+			"longitude": -0.5600,
+			"population": 105367
+		},
+		{
+			"name": "Chelmsford",
+			"latitude": 51.7356,
+			"longitude": 0.4685,
+			"population": 111511
+		},
+		{
+			"name": "Oldham",
+			"latitude": 53.5409,
+			"longitude": -2.1114,
+			"population": 96555
+		}
+	]
+}

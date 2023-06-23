@@ -1,0 +1,148 @@
+{
+	"structures": [
+		{
+			"name": "The Tower of London",
+			"latitude": 51.50,
+			"longitude": -0.07,
+			"type": "Fortress"
+		},
+		{
+			"name": "Thames Water Desalination Plant",
+			"latitude": 51.50,
+			"longitude": 0.03,
+			"type": "Water purification plant"
+		},
+		{
+			"name": "Royal London Hospital",
+			"latitude": 51.51,
+			"longitude": -0.06,
+			"type": "Hospital"
+		},
+		{
+			"name": "New Covent Garden Market",
+			"latitude": 51.48,
+			"longitude": -0.13,
+			"type": "Marketplace"
+		},
+		{
+			"name": "The British Library",
+			"latitude": 51.52,
+			"longitude": -0.12,
+			"type": "Library"
+		},
+		{
+			"name": "Battersea Power Station",
+			"latitude": 51.48,
+			"longitude": -0.14,
+			"type": "Power station"
+		},
+		{
+			"name": "Kew Gardens (Royal Botanic Gardens)",
+			"latitude": 51.47,
+			"longitude": -0.29,
+			"type": "Botanical gardens"
+		},
+		{
+			"name": "BBC Broadcasting House",
+			"latitude": 51.51,
+			"longitude": -0.14,
+			"type": "Communication station"
+		},
+		{
+			"name": "Financial District",
+			"latitude": 51.50,
+			"longitude": -0.08,
+			"type": "Dense"
+		},
+		{
+			"name": "Wembley Stadium",
+			"latitude": 51.55,
+			"longitude": -0.27,
+			"type": "Sports stadium"
+		},
+		{
+			"name": "The London Silver Vaults",
+			"latitude": 51.51,
+			"longitude": -0.11,
+			"type": "Security vault"
+		},
+		{
+			"name": "Greenwich Observatory",
+			"latitude": 51.47,
+			"longitude": 0.00,
+			"type": "Observatory"
+		},
+		{
+			"name": "The Ministry of Defence Building",
+			"latitude": 51.50,
+			"longitude": -0.12,
+			"type": "Fortification"
+		},
+		{
+			"name": "The Tate Modern",
+			"latitude": 51.50,
+			"longitude": -0.09,
+			"type": "Art gallery"
+		},
+		{
+			"name": "Billingsgate Fish Market",
+			"latitude": 51.50,
+			"longitude": -0.02,
+			"type": "Fish market"
+		},
+		{
+			"name": "Wilton's Music Hall",
+			"latitude": 51.51,
+			"longitude": -0.06,
+			"type": "Community centre"
+		},
+		{
+			"name": "London City Hall",
+			"latitude": 51.50,
+			"longitude": -0.08,
+			"type": "Government building"
+		},
+		{
+			"name": "Crossness Pumping Station",
+			"latitude": 51.50,
+			"longitude": 0.13,
+			"type": "Sewage pump"
+		},
+		{
+			"name": "St. Paul's Cathedral",
+			"latitude": 51.51,
+			"longitude": -0.09,
+			"type": "Place of worship"
+		},
+		{
+			"name": "Alexandra Palace",
+			"latitude": 51.59,
+			"longitude": -0.13,
+			"type": "Entertainment centre"
+		},
+		{
+			"name": "Royal Arsenal",
+			"latitude": 51.49,
+			"longitude": 0.07,
+			"type": "Military building"
+		},
+		{
+			"name": "Harrods Department Store",
+			"latitude": 51.49,
+			"longitude": -0.16,
+			"type": "Shopping centre"
+		},
+		{
+			"name": "Richmond Park",
+			"latitude": 51.44,
+			"longitude": -0.27,
+			"type": "Park"
+		},
+		{
+			"name": "Bank of England Vault",
+			"latitude": 51.51,
+			"longitude": -0.08,
+			"type": "Security vault"
+		}
+	]
+}

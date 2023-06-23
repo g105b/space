@@ -1,0 +1,29 @@
+{
+	"continents": [
+		{
+			"name": "Eurasia",
+			"latitude": 50.0,
+			"longitude": 60.0
+		},
+		{
+			"name": "America",
+			"latitude": 30.0,
+			"longitude": -85.0
+		},
+		{
+			"name": "Africa",
+			"latitude": 10.0,
+			"longitude": 20.0
+		},
+		{
+			"name": "Antarctica",
+			"latitude": -80.0,
+			"longitude": 0.0
+		},
+		{
+			"name": "Australia",
+			"latitude": -25.0,
+			"longitude": 135.0
+		}
+	]
+}
