@@ -18,8 +18,8 @@ $c-pink: #FF77A8;
 $c-light-peach: #FFCCAA;
 
 @mixin contrast-var($c) {
-	$color-brightness: round((red($c)*299)+(green($c)*587)+(blue($c)*114)/1000);
-	$light-color: round((red(#ffffff)*299)+(green(#ffffff)*587)+(blue(#ffffff)*114)/1000);
+	$color-brightness: math.div((red($c)*299)+(green($c)*587)+(blue($c)*114), 1000);
+	$light-color: math.div((red(#ffffff)*299)+(green(#ffffff)*587)+(blue(#ffffff)*114), 1000);
 	@if abs($color-brightness) < math.div($light-color, 2) {
 		--c-contrast: #{$c-white};
 	}
@@ -151,8 +151,8 @@ main {
 			width: 100vw;
 			aspect-ratio: 1;
 			display: flex;
-			justify-content: center;
-			align-items: center;
+			justify-content: stretch;
+			align-items: stretch;
 
 			@media(min-width: 800px) {
 				width: 128px * 3;
@@ -188,13 +188,14 @@ main {
 				border-right: 2px solid;
 				text-transform: uppercase;
 
-				&:last-of-type {
+				&:nth-of-type(4) {
 					border-right: none;
 				}
 
 				@media(min-width: 800px) {
 					width: 50%;
 					height: 64px;
+					border-bottom: 2px solid;
 
 					&:nth-of-type(odd) {
 						border-right: 2px solid;
@@ -203,7 +204,7 @@ main {
 						border-right: none;
 					}
 					&:nth-of-type(n + 3) {
-						border-top: 2px solid;
+						border-bottom: none;
 					}
 				}
 			}

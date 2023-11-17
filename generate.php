@@ -23,8 +23,8 @@ $fgsCoords = "+0:+0";
 $fgsGenerator = new Generator02FGS("$name@ugs=$ugsCoords fgs=$fgsCoords", false);
 $ggsCoords = "+0:+0";
 $ggsGenerator = new Generator03GGS("$name@ugs=$ugsCoords fgs=$fgsCoords ggs=$ggsCoords", false);
-//$sgsCoords = "+0:+0";
-$sgsCoords = "+1:+1";
+$sgsCoords = "+0:+0";
+//$sgsCoords = "+1:+1";
 $sgsGenerator = new Generator04SGS("$name@ugs=$ugsCoords fgs=$fgsCoords ggs=$ggsCoords sgs=$sgsCoords", false);
 exit;
 ugs:
